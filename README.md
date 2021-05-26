@@ -1,4 +1,4 @@
-# namecardqrcodeapp
+# QRContact
 
 A new Flutter project.
 
