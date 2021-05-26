@@ -7,6 +7,7 @@ import 'package:namecardqrcodeapp/createContact.dart';
 import 'package:namecardqrcodeapp/editContact.dart';
 import 'package:namecardqrcodeapp/handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 void main() {
   runApp(MyApp());
@@ -49,23 +50,59 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      children: [
-        Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            Container(
-              child: CustomPaint(
-                painter: myPainter(),
-                size: Size(MediaQuery.of(context).size.width,
-                    MediaQuery.of(context).size.height * 0.4),
+    double sHeight = MediaQuery.of(context).padding.top;
+    return SlidingUpPanel(
+      //parallaxEnabled: true,
+      //parallaxOffset: 1,
+      minHeight: MediaQuery.of(context).size.height * 0.1,
+      maxHeight: MediaQuery.of(context).size.height * 0.6,
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
+      panel: _body(),
+      body: Scaffold(
+          body: Column(
+        children: [
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                child: CustomPaint(
+                  painter: myPainter(),
+                  size: Size(MediaQuery.of(context).size.width,
+                      MediaQuery.of(context).size.height * 0.4),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 60),
-              child: Column(
+              Column(
                 children: [
+                  Padding(
+                    padding: EdgeInsets.only(right: 20.0, top: sHeight + 15),
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              color: background,
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.add,
+                              color: primary,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          createContact())).then((value) {
+                                handler.readCounter().then((value) {
+                                  setState(() {
+                                    list = value;
+                                  });
+                                });
+                              });
+                            },
+                          )),
+                    ),
+                  ),
                   Text(
                     "QRContact",
                     style: TextStyle(
@@ -280,56 +317,76 @@ class _homePageState extends State<homePage> {
                   )
                 ],
               ),
-            ),
-          ],
-        ),
-        Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(MediaQuery.of(context).size.width * .65, 49)),
-                      elevation: MaterialStateProperty.all<double>(5),
-                      backgroundColor: MaterialStateProperty.all<Color>(accent),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28.0),
-                      ))),
-                  onPressed: null,
-                  child: Text(
-                    "Scan QR Code",
-                    style: TextStyle(color: primary, fontSize: 20),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: FloatingActionButton(
-                  backgroundColor: primary,
-                  child: Icon(Icons.add, color: background),
-                  onPressed: () {
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => createContact()))
-                        .then((value) {
-                      handler.readCounter().then((value) {
-                        setState(() {
-                          list = value;
-                        });
-                      });
-                    });
-                  },
-                ),
-              )
             ],
           ),
-        ),
-      ],
-    ));
+          /* Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all<Size>(
+                            Size(MediaQuery.of(context).size.width * .65, 49)),
+                        elevation: MaterialStateProperty.all<double>(5),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(accent),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28.0),
+                        ))),
+                    onPressed: null,
+                    child: Text(
+                      "Scan QR Code",
+                      style: TextStyle(color: primary, fontSize: 20),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: FloatingActionButton(
+                    backgroundColor: primary,
+                    child: Icon(Icons.add, color: background),
+                    onPressed: () {
+                      Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => createContact()))
+                          .then((value) {
+                        handler.readCounter().then((value) {
+                          setState(() {
+                            list = value;
+                          });
+                        });
+                      });
+                    },
+                  ),
+                )
+              ],
+            ),
+          ), */
+        ],
+      )),
+    );
   }
+}
+
+Widget _body() {
+  return Column(
+    children: [
+      SizedBox(
+        height: 12.0,
+      ),
+      Container(
+        width: 30,
+        height: 5,
+        decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      ),
+      Text("HI")
+    ],
+  );
 }

@@ -6,7 +6,7 @@ const Color accent = Color(0xFFFFFFFF);
 const Color cardBackground = Color(0xFFF7F7F7);
 const Color textBox = Color(0xFFFAF8F8);
 
-const TextStyle header = TextStyle(fontWeight: FontWeight.bold, fontSize: 23);
+const TextStyle header = TextStyle(fontWeight: FontWeight.bold, fontSize: 21);
 
 BoxDecoration textBoxDeco = BoxDecoration(
     color: Colors.white,

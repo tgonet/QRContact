@@ -27,15 +27,15 @@ class createContact extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          centerTitle: true,
           title: Text(
-            'Create Contact',
+            'Create',
             style: header,
           ),
           automaticallyImplyLeading: true,
           backgroundColor: primary,
           actions: [
             IconButton(
+              iconSize: 25,
               icon: Icon(Icons.check),
               onPressed: () {
                 text = nameController.text == "" ? " " : nameController.text;

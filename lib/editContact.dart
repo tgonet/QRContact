@@ -37,6 +37,10 @@ class _editContactState extends State<editContact> {
     websiteController.dispose();
     emailController.dispose();
     numberController.dispose();
+    organisationController.dispose();
+    titleController.dispose();
+    addressController.dispose();
+    purposeController.dispose();
     super.dispose();
   }
 
@@ -66,15 +70,15 @@ class _editContactState extends State<editContact> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          centerTitle: true,
           title: Text(
-            'Edit Contact',
+            'Edit',
             style: header,
           ),
           automaticallyImplyLeading: true,
           backgroundColor: primary,
           actions: [
             IconButton(
+              iconSize: 25,
               icon: Icon(Icons.check),
               onPressed: () {
                 text = nameController.text == "" ? " " : nameController.text;
