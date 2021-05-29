@@ -15,6 +15,19 @@ BoxDecoration textBoxDeco = BoxDecoration(
       BoxShadow(color: Colors.grey, blurRadius: 2.0, spreadRadius: 0.4)
     ]);
 
+BorderRadiusGeometry panelRadius = BorderRadius.only(
+  topLeft: Radius.circular(24.0),
+  topRight: Radius.circular(24.0),
+);
+
+Container panelCue = Container(
+  width: 30,
+  height: 5,
+  decoration: BoxDecoration(
+      color: Colors.grey[300],
+      borderRadius: BorderRadius.all(Radius.circular(12.0))),
+);
+
 List<DropdownMenuItem<String>> items = [
   DropdownMenuItem(
     child: Text("Work"),

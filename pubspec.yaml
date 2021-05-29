@@ -31,6 +31,10 @@ dependencies:
   qr_flutter: ^4.0.0
   vcard: ^0.1.1
   sliding_up_panel: ^2.0.0+1
+  qr_code_scanner: ^0.4.0
+  permission_handler: ^5.1.0+2
+  fluttertoast: ^8.0.7
+  flutter_contacts: ^1.1.0
  
   
 

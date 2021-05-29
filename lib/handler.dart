@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:path_provider/path_provider.dart';
-import 'package:vcard/vcard.dart';
 import 'dart:io';
 import 'NameCard.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:vcard/vcard.dart';
 
 class Handler {
   Handler();
@@ -65,5 +66,12 @@ class Handler {
     vCard.homeAddress.street = address;
     return NameCard(name, purpose, hp, email, url, organisation, jobTitle,
         address, vCard.getFormattedString());
+  }
+
+  void getPermission() async {
+    var status = await Permission.contacts.status;
+    if (status.isDenied) {
+      //await Permission.contacts.request().then((value) => null)
+    }
   }
 }
