@@ -5,12 +5,20 @@ const Color background = Color(0xFFF4F5F2);
 const Color accent = Color(0xFFFFFFFF);
 const Color cardBackground = Color(0xFFF7F7F7);
 const Color textBox = Color(0xFFFAF8F8);
+const Color primaryTextbox = Color(0x213328d2);
 
 const TextStyle header = TextStyle(fontWeight: FontWeight.bold, fontSize: 21);
 
 BoxDecoration textBoxDeco = BoxDecoration(
     color: Colors.white,
     borderRadius: BorderRadius.circular(10.0),
+    boxShadow: [
+      BoxShadow(color: Colors.grey, blurRadius: 2.0, spreadRadius: 0.4)
+    ]);
+
+BoxDecoration textBoxDeco1 = BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(5.0),
     boxShadow: [
       BoxShadow(color: Colors.grey, blurRadius: 2.0, spreadRadius: 0.4)
     ]);

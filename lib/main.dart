@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:platform/platform.dart';
 import 'package:flutter/material.dart';
 import 'package:namecardqrcodeapp/constant.dart';
 import 'package:namecardqrcodeapp/contactDetails.dart';
@@ -7,10 +8,10 @@ import 'package:namecardqrcodeapp/createContact.dart';
 import 'package:namecardqrcodeapp/editContact.dart';
 import 'package:namecardqrcodeapp/handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+/* import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:flutter_contacts/flutter_contacts.dart'; */
 
 void main() {
   runApp(MyApp());
