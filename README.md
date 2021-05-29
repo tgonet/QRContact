@@ -1,16 +1,16 @@
 # QRContact
 
-A new Flutter project.
+## Description
+This mobile application is developed to allow easy sharing of contact by scanning a QR code. It allows users to create contacts for different purposes such as for one's day job or side business. This application allows its users to generate a Contacts QR Code. 
 
-## Getting Started
+## Technologies used
+SDK: Flutter
+### Packages used 
+- https://pub.dev/packages/qr_flutter
+- https://pub.dev/packages/vcard
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Functionailty
+Users can 
+- Create a new contact
+- Edit an existing contact
+- View an existing contact
