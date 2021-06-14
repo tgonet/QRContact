@@ -1,33 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:namecardqrcodeapp/constant.dart';
 import 'package:namecardqrcodeapp/handler.dart';
-import 'package:vcard/vcard.dart';
-
 import 'NameCard.dart';
-import 'constant.dart';
 
-class editContact extends StatefulWidget {
-  int position;
+class saveContact extends StatefulWidget {
+  NameCard vcard;
+  saveContact({Key? key, required this.vcard}) : super(key: key);
 
   @override
-  editContact({Key? key, required this.position}) : super(key: key);
-
-  _editContactState createState() => _editContactState();
+  _saveContactState createState() => _saveContactState();
 }
 
-class _editContactState extends State<editContact> {
+class _saveContactState extends State<saveContact> {
+  String text = "";
   var nameController,
       numberController,
       websiteController,
       emailController,
       organisationController,
       titleController,
-      addressController,
-      purposeController;
-  Handler handler = Handler();
-  List<NameCard> list = [];
-  late NameCard nc;
-  var vCard = VCard();
-  String text = "";
+      addressController;
 
   @override
   void dispose() {
@@ -39,7 +31,6 @@ class _editContactState extends State<editContact> {
     organisationController.dispose();
     titleController.dispose();
     addressController.dispose();
-    purposeController.dispose();
     super.dispose();
   }
 
@@ -47,30 +38,28 @@ class _editContactState extends State<editContact> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    handler.readCounter().then((value) {
-      setState(() {
-        list = value;
-        nc = list[widget.position];
-        nameController = TextEditingController(text: nc.name);
-        numberController = TextEditingController(text: nc.mobile);
-        websiteController = TextEditingController(text: nc.website);
-        emailController = TextEditingController(text: nc.email);
-        organisationController = TextEditingController(text: nc.organisation);
-        titleController = TextEditingController(text: nc.title);
-        addressController = TextEditingController(text: nc.address);
-        purposeController = TextEditingController(text: nc.purpose);
-      });
+    setState(() {
+      var nc = widget.vcard;
+      print(nc.address + "hi:");
+      nameController = TextEditingController(text: nc.name);
+      numberController = TextEditingController(text: nc.mobile);
+      websiteController = TextEditingController(text: nc.website);
+      emailController = TextEditingController(text: nc.email);
+      organisationController = TextEditingController(text: nc.organisation);
+      titleController = TextEditingController(text: nc.title);
+      addressController = TextEditingController(text: nc.address);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     double sHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
           title: Text(
-            'Edit',
+            'Save',
             style: header,
           ),
           automaticallyImplyLeading: true,
@@ -81,7 +70,7 @@ class _editContactState extends State<editContact> {
               icon: Icon(Icons.check),
               onPressed: () {
                 text = nameController.text == "" ? " " : nameController.text;
-                list[widget.position] = handler.saveCard(
+                /* list.add(handler.saveCard(
                     nameController.text,
                     numberController.text,
                     organisationController.text,
@@ -90,10 +79,7 @@ class _editContactState extends State<editContact> {
                     websiteController.text,
                     emailController.text,
                     addressController.text,
-                    purposeController.text);
-                handler
-                    .writeCounter(list)
-                    .then((value) => Navigator.pop(context));
+                    purposeController.text)); */
               },
             )
           ],
@@ -119,19 +105,17 @@ class _editContactState extends State<editContact> {
                     buildTextFormField(
                         nameController, "Name", TextInputType.name),
                     buildTextFormField(
-                        purposeController, "Purpose", TextInputType.name),
-                    buildTextFormField(organisationController, "Organisation",
-                        TextInputType.text),
-                    buildTextFormField(
-                        titleController, "Job Title", TextInputType.text),
-                    buildTextFormField(
                         numberController, "Mobile Number", TextInputType.phone),
-                    buildTextFormField(addressController, "Address",
-                        TextInputType.streetAddress),
                     buildTextFormField(
                         emailController, "Email", TextInputType.emailAddress),
                     buildTextFormField(
                         websiteController, "Website", TextInputType.url),
+                    buildTextFormField(organisationController, "Organisation",
+                        TextInputType.text),
+                    buildTextFormField(
+                        titleController, "Title", TextInputType.text),
+                    buildTextFormField(addressController, "Address",
+                        TextInputType.streetAddress),
                   ],
                 ),
               ),

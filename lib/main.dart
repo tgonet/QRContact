@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:namecardqrcodeapp/saveContact.dart';
 import 'package:platform/platform.dart';
 import 'package:flutter/material.dart';
 import 'package:namecardqrcodeapp/constant.dart';
@@ -13,6 +14,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:simple_vcard_parser/simple_vcard_parser.dart';
+import 'package:vcard/vcard_formatter.dart';
 
 void main() {
   runApp(MyApp());
@@ -73,12 +75,11 @@ class _homePageState extends State<homePage> {
 
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
+    VCard vCard;
     controller.scannedDataStream.first.then((value) {
       result = value;
       print(result.code);
-      VCard vCard = VCard(result.code);
-
-      print("hi" + vCard.organisation);
+      vCard = VCard(result.code);
       Fluttertoast.showToast(
           msg: "Contact saved",
           toastLength: Toast.LENGTH_SHORT,
@@ -87,6 +88,20 @@ class _homePageState extends State<homePage> {
           backgroundColor: Colors.grey,
           textColor: Colors.white,
           fontSize: 16.0);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => saveContact(
+                  vcard: NameCard(
+                      vCard.formattedName,
+                      'null',
+                      vCard.typedTelephone[0][0].toString(),
+                      vCard.email,
+                      vCard.typedURL[0][0].toString(),
+                      vCard.organisation,
+                      vCard.title,
+                      vCard.typedAddress[0][0][0].toString(),
+                      'null'))));
     });
   }
 
@@ -238,8 +253,6 @@ class _homePageState extends State<homePage> {
                                                     0.93),
                                           ),
                                           child: QrImage(
-                                            /* embeddedImage:
-                                                AssetImage('images/image.jpg'), */
                                             data: list[i].qrData,
                                             backgroundColor: Colors.white,
                                           ),
