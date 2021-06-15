@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'NameCard.dart';
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vcard/vcard.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Handler {
   Handler();
@@ -68,10 +70,11 @@ class Handler {
         address, vCard.getFormattedString());
   }
 
-  void getPermission() async {
+  Future<bool> getPermission() async {
     var status = await Permission.contacts.status;
-    if (status.isDenied) {
-      //await Permission.contacts.request().then((value) => null)
+    if (status.isDenied || status.isUndetermined) {
+      await Permission.contacts.request();
     }
+    return Permission.contacts.status.isGranted;
   }
 }

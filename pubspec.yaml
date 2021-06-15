@@ -34,10 +34,8 @@ dependencies:
   qr_code_scanner: ^0.4.0
   permission_handler: ^5.1.0+2
   fluttertoast: ^8.0.7
-  flutter_contacts: ^1.1.0
+  flutter_contact: ^0.6.1
   simple_vcard_parser: ^0.1.6
- 
-  
 
 dev_dependencies:
   flutter_test:

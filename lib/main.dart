@@ -1,6 +1,5 @@
 // @dart=2.9
 import 'package:namecardqrcodeapp/saveContact.dart';
-import 'package:platform/platform.dart';
 import 'package:flutter/material.dart';
 import 'package:namecardqrcodeapp/constant.dart';
 import 'package:namecardqrcodeapp/contactDetails.dart';
@@ -11,10 +10,7 @@ import 'package:namecardqrcodeapp/handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:simple_vcard_parser/simple_vcard_parser.dart';
-import 'package:vcard/vcard_formatter.dart';
 
 void main() {
   runApp(MyApp());
@@ -50,7 +46,7 @@ class _homePageState extends State<homePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //_askPermissions();
+    handler.getPermission();
     handler.readCounter().then((value) {
       setState(() {
         list = value;
@@ -78,16 +74,7 @@ class _homePageState extends State<homePage> {
     VCard vCard;
     controller.scannedDataStream.first.then((value) {
       result = value;
-      print(result.code);
       vCard = VCard(result.code);
-      Fluttertoast.showToast(
-          msg: "Contact saved",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.grey,
-          textColor: Colors.white,
-          fontSize: 16.0);
       Navigator.push(
           context,
           MaterialPageRoute(

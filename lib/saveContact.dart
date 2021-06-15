@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_contact/contacts.dart';
 import 'package:namecardqrcodeapp/constant.dart';
 import 'package:namecardqrcodeapp/handler.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'NameCard.dart';
 
 class saveContact extends StatefulWidget {
@@ -13,6 +16,7 @@ class saveContact extends StatefulWidget {
 
 class _saveContactState extends State<saveContact> {
   String text = "";
+  Handler handler = Handler();
   var nameController,
       numberController,
       websiteController,
@@ -40,7 +44,6 @@ class _saveContactState extends State<saveContact> {
     super.initState();
     setState(() {
       var nc = widget.vcard;
-      print(nc.address + "hi:");
       nameController = TextEditingController(text: nc.name);
       numberController = TextEditingController(text: nc.mobile);
       websiteController = TextEditingController(text: nc.website);
@@ -69,6 +72,40 @@ class _saveContactState extends State<saveContact> {
               iconSize: 25,
               icon: Icon(Icons.check),
               onPressed: () {
+                handler.getPermission().then((value) {
+                  if (value) {
+                    Contacts.addContact(Contact(
+                        displayName: nameController.text,
+                        company: organisationController.text,
+                        jobTitle: titleController.text,
+                        emails: [
+                          Item(label: 'home', value: '999')
+                        ],
+                        urls: [
+                          Item(label: 'home', value: 'websiteController.text')
+                        ],
+                        phones: [
+                          Item(label: 'home', value: 'numberController.text')
+                        ])).then((value) => Fluttertoast.showToast(
+                        msg: "Permission granted",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 14.0));
+                  } else {
+                    Fluttertoast.showToast(
+                        msg: "Please grant permission to save contact",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 14.0);
+                  }
+                });
+
                 text = nameController.text == "" ? " " : nameController.text;
                 /* list.add(handler.saveCard(
                     nameController.text,
