@@ -74,26 +74,34 @@ class _saveContactState extends State<saveContact> {
               onPressed: () {
                 handler.getPermission().then((value) {
                   if (value) {
-                    Contacts.addContact(Contact(
-                        displayName: nameController.text,
+                    var contact = Contact(
+                        givenName: nameController.text,
+                        phones: [
+                          Item(label: 'Home', value: numberController.text)
+                        ],
                         company: organisationController.text,
                         jobTitle: titleController.text,
-                        emails: [
-                          Item(label: 'home', value: '999')
-                        ],
                         urls: [
-                          Item(label: 'home', value: 'websiteController.text')
+                          Item(label: 'Home', value: websiteController.text)
                         ],
-                        phones: [
-                          Item(label: 'home', value: 'numberController.text')
-                        ])).then((value) => Fluttertoast.showToast(
-                        msg: "Permission granted",
-                        toastLength: Toast.LENGTH_SHORT,
-                        gravity: ToastGravity.BOTTOM,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.grey,
-                        textColor: Colors.white,
-                        fontSize: 14.0));
+                        emails: [
+                          Item(label: 'Home', value: emailController.text)
+                        ],
+                        postalAddresses: [
+                          PostalAddress(
+                              label: 'Home', street: addressController.text)
+                        ]);
+                    Contacts.addContact(contact).whenComplete(() {
+                      Fluttertoast.showToast(
+                              msg: "Contact saved",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey,
+                              textColor: Colors.white,
+                              fontSize: 14.0)
+                          .then((value) => Navigator.pop(context));
+                    });
                   } else {
                     Fluttertoast.showToast(
                         msg: "Please grant permission to save contact",
