@@ -38,6 +38,7 @@ class _homePageState extends State<homePage> {
   Handler handler = Handler();
   List<NameCard> list = [];
   int _index = 0;
+  bool test = false;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode result;
   QRViewController controller;
@@ -53,6 +54,8 @@ class _homePageState extends State<homePage> {
       });
     });
   }
+
+  Future<void> scanQR(bool test) {}
 
   Widget _buildQrView(BuildContext context) {
     // To ensure the Scanner view is properly sizes after rotation
@@ -72,23 +75,29 @@ class _homePageState extends State<homePage> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     VCard vCard;
-    controller.scannedDataStream.first.then((value) {
-      result = value;
-      vCard = VCard(result.code);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => saveContact(
-                  vcard: NameCard(
-                      vCard.formattedName,
-                      'null',
-                      vCard.typedTelephone[0][0].toString(),
-                      vCard.email,
-                      vCard.typedURL[0][0].toString(),
-                      vCard.organisation,
-                      vCard.title,
-                      vCard.typedAddress[0][0][0].toString(),
-                      'null'))));
+    Barcode test;
+    controller.scannedDataStream.listen((event) {}).onData((data) {
+      print('2');
+      if (data != test) {
+        vCard = VCard(data.code);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => saveContact(
+                    vcard: NameCard(
+                        vCard.formattedName,
+                        'null',
+                        vCard.typedTelephone[0][0].toString(),
+                        vCard.email,
+                        vCard.typedURL[0][0].toString(),
+                        vCard.organisation,
+                        vCard.title,
+                        vCard.typedAddress[0][0][0].toString(),
+                        'null')))).then((value) => controller.resumeCamera());
+        controller.pauseCamera();
+        //Future.delayed(const Duration(milliseconds: 10000), () {});
+      }
+      test = data;
     });
   }
 
